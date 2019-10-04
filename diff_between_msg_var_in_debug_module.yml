@@ -1,8 +1,9 @@
 ### In this playbook, i was trying to get all facts for host. Intrestingly, as defined earlier in other playbook, we need to have gather_facts true so as to use magic variable hostvars. Interstingly, besides that you may be surprised why msg is working and var is not working in debug module. Reason, is var just displays defined variable and here we didn't have any defined varible with hostvars. msg gets that value.. Need to research how...For future references, these are git source controlled
 
 
-- hosts: one
-  gather_facts: true
+- hosts: overallservers
+#- hosts: one
+  gather_facts: false
   
   tasks:
     - name: display that fact value
@@ -16,3 +17,7 @@
     - name: display data value
       debug:
         var: data
+  
+    - name: display a value
+      debug:
+        msg: "name is ----> {{ a }}"
