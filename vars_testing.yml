@@ -1,0 +1,61 @@
+- hosts: all
+  gather_facts: yes
+  vars:
+ ## Below defined is dicitonary and you can define your nested dicitonaries too
+    Details:
+       firstname: 'chintu'
+       lastname: 'reddy'
+       age: 23
+
+  ### Below defined is array with name nickname
+    nickname:
+      - 'chintu'
+      - 'praveen'
+      - 'reddy'
+### Included vars files into playbook
+  vars_files:
+    - vars_defined_files/var_one.yml
+
+### Including vars prompt to prompt that variable name
+  vars_prompt:
+    - name: username
+      private: no
+    - name: password
+      
+  tasks:
+    - name: display that variable
+      debug:
+        msg: "{{ Details }}"
+
+    - name: display that variable details using dot notation as in json world
+      debug:
+        msg: "{{ Details.firstname }}"
+   
+    - name: display that variable details using dot notation as in python world
+      debug:
+        msg: "{{ Details['firstname'] }}"
+
+    - name: display that variable details using dot notation as in python world
+      debug:
+        msg: "{{ nickname[0] }}"
+
+    - name: calling this message from included vars file 
+      debug:
+        msg: "your designation is ----> {{ position }}"
+
+    - name: Since we included vars_prompt, no matter what it will prompt \
+            and store value in username variable as we defined name as username
+      debug:
+        msg: "your username is ----> {{ username }} and password is {{ password}}"
+  
+  ### Below we are using hostvars hash to retrieve variables. To get values from hostvars, we have turn on gather_facts to yes, then only all hostvars values will be included. Once after hostvars hash is included, get your variable value as your desired/needed one
+    - name: calling this message making use of hostvars hash
+      debug:
+        msg: "your designation is ----> {{ hostvars[ansible_hostname] | default('') }}"  
+
+#### So, if no value is returned from vars, we can use default value to be returned , which is commoly used in python programming language
+    - name: testing use of default if no value is returned from vars
+      debug:
+        msg: "your demo value is ----> {{ demo | default('you didnotdefine demo value in vars') }}"  
+
+
