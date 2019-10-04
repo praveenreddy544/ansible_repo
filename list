@@ -10,3 +10,13 @@ h2
 
 [thr]
 h3
+
+[overallservers:children]
+one
+two
+
+[one:vars]
+a='dumbu'
+
+[all:vars]
+a='chintu'
