@@ -1,0 +1,13 @@
+- hosts: one
+  #gather_facts: no
+  tasks:
+    - name: run hostname via command
+      command: hostname
+      when: ( ansible_distribution_major_version |int  >= 7 ) 
+      register: output_values
+
+    - name: run this task only when register changes
+      debug:
+        var: output_values
+ # below when statement evaluates whether above first task (run hostname etc) has been changed or not. It will capture that value and it will this task only when the value returned is true 
+      when: output_values.changed

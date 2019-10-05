@@ -1,0 +1,21 @@
+- hosts: one
+  #gather_facts: yes
+  tasks:
+### Note,Here we are getting fact value from ansible_distribution as string
+   - name: display ansible_distribution value
+     debug:
+       msg: "distribution is ---> {{ ansible_distribution_major_version }}"
+
+   - name: display message when  ansible_distribution value equals or greater than 7
+     command: hostname 
+
+    ## Here , two things are happening \n
+    #   1) we are comparing below fact value equal or greater than 7. i
+    #   2) look at fact value returned from `ansible one -i list -m setup -a 'filter=ansible_distribution_major_version'`.Its gives string output.So, thats the reason its always safe to conver that int to compare which is standard. So, we passed that | int to that returned fact value so as to typecase to int and compare (Thanks to jinja2 filters and research on jinja2 usuage.
+    #    If above condition returns true, then it wil execute this or else skips
+     when: ( ansible_distribution_major_version |int  >= 7 )
+     register: hostname_value
+
+   - name: display variable hostname_value
+     debug:
+       var: hostname_value
