@@ -1,0 +1,9 @@
+# By default ansible uses linear approach like executing a task on all hosts that we give in list and then move on to next task
+- hosts: all
+  gather_facts: no
+  serial: 1
+  tasks:
+    - name: task1
+      command: sleep 2
+    - name: task2
+      command: sleep 3

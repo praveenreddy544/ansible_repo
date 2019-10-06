@@ -1,0 +1,73 @@
+#- hosts: all
+# we use async module to fire up all tasks at once and then we can wait for that task using poll. If you give poll as 0 which is like fire and forget situation, but then we can use async_status to do. Below id playbook demonstrates good understanding of that. Rule is estimate time that willbe taken for processing that task so that you can give that time in async like how many seconds it would take to complete that
+- hosts: one,two
+  vars:
+    job_ids: [] #  you use this empty array so as to later use in dynamic array additon. Look at set_fact section
+  tasks:
+    - name: task 1
+      command: sleep 5
+      when: ansible_hostname == 'h1'
+
+## Here we are using async time set to 10 which means job should run with in that 10 seconds and poll 1 means to wait for result and poll for every second on its status. If you want fire-and-forget situation, simply keep poll value as 0
+      async: 10
+      #poll: 1
+      poll: 0
+      register: async_info # Here we are capturing this task output
+
+    - name: task 2
+      command: sleep 15
+      when: ansible_hostname == 'h2'
+
+## Here we are using async time set to 10 which means job should run with in that 10 seconds and poll 1 means to wait for result and poll for every second on its status. If you want fire-and-forget situation, simply keep poll value as 0
+      async: 10
+      poll: 0
+      register: async_info_task2 # Here we are capturing this task output
+  
+    - name: set fact 
+      set_fact:
+          dig: >
+              data is must
+              and its there
+
+    - name: display dig fact value
+      debug:
+        msg: "dig value is ---> {{ dig }}"
+
+    
+    - name: dispaly this async_info variable from task 1
+      debug:
+        var: async_info
+ 
+    - name: dispaly this async_info variable from task 2
+      debug:
+        var: async_info_task2
+ 
+    - name: capture async job ids
+      set_fact:
+         job_ids: >
+                  {% if item.ansible_job_id is defined -%}
+                     {{ job_ids + [item.ansible_job_id] }}
+                  {% else -%}
+                     {{ job_ids }}
+                  {% endif %}
+      #with_items: "{{ [ async_info, async_info_task2 ] }}"
+      with_items:
+          - "{{ async_info }}"
+          - "{{async_info_task2 }}"
+
+    - name: display async job_ids variable value
+      debug:
+        var: job_ids
+     
+    #- name: dispaly this async_info variable in jinja2
+      #debug:
+       # msg: "value is {{ async_info }}"
+ 
+    
+    - name: wait for async jobs status to be done
+      async_status:
+         jid: "{{ item }}"
+      with_items: "{{ job_ids }}"
+      register: captured_job_id_result
+      until: captured_job_id_result.finished
+      retries: 15
