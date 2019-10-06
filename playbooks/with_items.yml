@@ -1,0 +1,18 @@
+- hosts: one
+  tasks:
+    - name: get this data
+      debug:
+        msg: "type is {{ ansible_distribution_file_variety }}"
+
+    - name: run message with with_items
+      debug:
+        msg: "{{ item }} is the os version"
+
+     # with_items is loop just like for , while in programming languages
+      with_items:
+        - UBUNTU
+        - RedHat
+        - CentOS
+     # from abvoe item is variable that will be iterated and conditions are evaluated like below. So, when item value matches below fact ,then only this task will be executed. Once after thsi condition matches, item variable value can be used in any ansible module for use:x
+
+      when: ansible_distribution_file_variety == item

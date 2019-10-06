@@ -1,0 +1,14 @@
+- hosts: one
+  become: yes
+  tasks:
+    - name: create users with description making use of with_dict
+      user:
+        name: "{{ item.key }}"
+        #state: present
+        state: absent
+        comment: "{{ item.value.fullname }}"
+      with_dict:
+          praveen:
+             fullname: 'praveen poreddy'
+          naveen:
+             fullname: 'naveen poreddy'

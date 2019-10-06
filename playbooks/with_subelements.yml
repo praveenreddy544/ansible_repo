@@ -1,0 +1,15 @@
+- hosts: one
+  vars:
+    familydetails:
+      - headname: 'ranga reddy'
+        heriters:
+          - naveen
+          - praveen
+        dob: 'Dec 12'
+  tasks:
+      - name: display variable familydetails
+        debug:
+          msg: "{{ item.0.dob }} is dob for {{ item.0.headname }} and --> {{ item.1 }}"
+        with_subelements:
+          - "{{ familydetails }}"
+          - heriters
