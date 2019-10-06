@@ -1,15 +1,30 @@
 - hosts: one
-  vars:
-    familydetails:
-      - headname: 'ranga reddy'
-        heriters:
-          - naveen
-          - praveen
-        dob: 'Dec 12'
+  vars_files:
+    - '/home/chintu/asi/playbooks/ansible_repo/vars_defined_files/var_one.yml'
   tasks:
       - name: display variable familydetails
         debug:
           msg: "{{ item.0.dob }} is dob for {{ item.0.headname }} and --> {{ item.1 }}"
+   
+      #### Iterate through list of dicitonarie and internally if you want to iterate over list of arrays of dictionaries. Here, look at family details variable
         with_subelements:
           - "{{ familydetails }}"
           - heriters
+
+    
+      - name: display variable houst_details
+        debug:
+          msg: "{{ item.0.totalmembers }} and head is  {{ item.0.family_head_name }} and --> {{ item.1.name }}"
+   # We are iterating over list of dicts at outer scope and itnernally though list of dicts 
+        with_subelements:
+          - "{{ house_details }}"
+          - 'sons_names'
+ 
+      - name: display variable houst_details
+        debug:
+          msg: "{{ item.0.totalmembers }} and head is  {{ item.0.principal_name }} and --> {{ item.1.name }}"
+   
+   # We are iterating over list of dicts at outer scope and itnernally though list of dicts and this dict is in another variable inner scope. So we use dot notation to get that field
+        with_subelements:
+          - "{{ college_details }}"
+          - 'toppers_names.cse.student_names'

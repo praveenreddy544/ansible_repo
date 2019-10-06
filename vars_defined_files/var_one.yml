@@ -1,3 +1,31 @@
 ---
 position: 'sys eng'
+
+familydetails:
+  - headname: 'ranga reddy'
+    heriters:
+       - naveen
+       - praveen
+    dob: 'Dec 12'
+house_details:
+  - totalmembers: 4
+    family_head_name: ranga reddy
+    family_home_head: saritha
+    sons_names:
+      - name: naveen
+        age: 30
+      - name: praveen
+        age: 29
+
+college_details:
+  - totalmembers: 30
+    principal_name: ranga reddy
+    hod: saritha
+    toppers_names:
+      cse:
+       student_names:
+        - name: naveen
+          age: 30
+        - name: praveen
+          age: 29
 ...
