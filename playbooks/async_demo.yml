@@ -1,6 +1,7 @@
 #- hosts: all
 # we use async module to fire up all tasks at once and then we can wait for that task using poll. If you give poll as 0 which is like fire and forget situation, but then we can use async_status to do. Below id playbook demonstrates good understanding of that. Rule is estimate time that willbe taken for processing that task so that you can give that time in async like how many seconds it would take to complete that
-- hosts: one,two
+#- hosts: one,two
+- hosts: all
   vars:
     job_ids: [] #  you use this empty array so as to later use in dynamic array additon. Look at set_fact section
   tasks:

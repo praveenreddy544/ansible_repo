@@ -1,0 +1,13 @@
+# we created new vars files inside vars_defined_files directory named vars_three.yml and encrypted this file using ansible-vault encrypt vars_three.yml and supplied password. Then we are accessing that file with
+
+#ansible-playbook accessing_vault_encrypted_Variable_file.yml -i list --ask-vault-pass
+
+#ansible-vault decrypt vars_three.yml --ask-vault-pass .. we use this comand to decrypt that encrypted vars file
+- hosts: one
+  gather_facts: no
+  vars_files:
+    - '/home/chintu/asi/playbooks/ansible_repo/vars_defined_files/vars_three.yml'
+  tasks:
+    - name: display inspirer value
+      debug: 
+        msg: "inspirer name is ----> {{ inspirer }}"
