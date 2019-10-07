@@ -1,0 +1,18 @@
+- hosts: one
+  gather_facts: no
+  tasks:
+    - name: display below msg
+      debug:
+        msg: '======== Testing include_tasks functionality'
+
+#### Beauty of include_tasks is that its dynamic in nature. So, for isntance take this below example. Here we have included including.yml as include_tasks and it has tasks in that file. So, when it comes to that first task run in that including.yml that will be executed as we dont have any chintu_var variable. Then, when it comes to second task, control will include and use value that we set chintu_var in these subsequent tasks. Thats being dynmaic in nature
+    - include_tasks: including.yml
+      when: chintu_var is not defined
+
+    - name: display test with import tasks
+      debug:
+        msg: '========= Testing import_tasks functionality'
+
+#### with import_tasks is that its static in nature. So, for isntance take this below example. Here we have imported importing.yml as import_tasks and it has tasks in that file. So, when it comes to that first task run in that importing.yml that will be executed as we dont have any chintu_var variable. Then, when it comes to second task, control will consider fresh that chintu_import_var is not defined for that task and will not include and use value from first task and as result subsequent tasks will be skipped. Thats being more static  in nature
+    - import_tasks: importing.yml
+      when: chintu_import_var is not defined

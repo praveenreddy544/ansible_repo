@@ -1,0 +1,11 @@
+- name: set fact chintu_var variable
+  set_fact:
+    chintu_import_var: 'imported scotch value'
+
+- name: display included var
+  debug:
+    msg: "data from chintu_import_var is {{ chintu_import_var }}"
+
+- name: display again imported var
+  debug:
+    msg: "data from ---> chintu_import_var is {{ chintu_import_var }}"

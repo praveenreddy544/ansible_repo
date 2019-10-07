@@ -1,0 +1,11 @@
+- name: set fact chintu_var variable
+  set_fact:
+    chintu_var: 'ranga reddy'
+
+- name: display included var
+  debug:
+    msg: "data from chintu_var is {{ chintu_var }}"
+
+- name: displaying included var
+  debug:
+    msg: "data from --->chintu_var is {{ chintu_var }}"

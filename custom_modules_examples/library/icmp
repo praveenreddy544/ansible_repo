@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+#source $1 >/dev/null 2>&1
+TAR=${dem:-127.0.0.1}
+ping -c 1 -w 2 ${TAR} >/dev/null 2>&1
+
+if [ $? == 0 ]
+then
+   echo "{\"changed\": true, \"rc\": 0}"
+else
+   echo "{\"failed\": true, \"msg\": \"failed to ping\", \"rc\": 1}"
+fi
+#### I see shebang line doesn't like to have comments before.Having comment before shebang line, is throwing error. So, i have included this line here.
+#We have to export ansible_library env varibale so to use custom modules or else sometimes you might see your moduels are not working as expected.

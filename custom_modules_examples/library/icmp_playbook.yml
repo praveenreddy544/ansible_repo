@@ -1,0 +1,8 @@
+---
+- hosts: one
+  gather_facts: no
+  tasks:
+    - name: test icmp module
+      icmp:
+        dem: 127.0.0.2
+...
