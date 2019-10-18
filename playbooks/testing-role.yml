@@ -1,0 +1,4 @@
+- hosts: one
+  gather_facts: no
+  roles:
+    - 'testing-role' # You can include roles in array format

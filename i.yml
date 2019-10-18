@@ -1,0 +1,30 @@
+- hosts: one
+  gather_facts: no
+  vars:
+    dat:
+      name: chintu
+      id: 
+      #- 544
+      #- 544
+      - firstname: praveen
+        lastname: reddy
+      - firstname: naveen
+        lastname: poreddy
+  tasks:
+    - name: display with items
+      debug:
+        msg: "data is ---> {{ item }}"
+      with_items:
+        - one
+        - two
+      register: wdata
+      when: item == 'one'
+      
+    - name: dispaly wdata
+      debug:
+        var: wdata
+
+    - name: dispaly dat variable
+      debug:
+        msg: "value is --->{{ item.firstname }}"
+      with_items: "{{ dat.id }}"

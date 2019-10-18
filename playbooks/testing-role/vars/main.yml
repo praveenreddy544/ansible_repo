@@ -1,0 +1,5 @@
+# You can make use of import and include playooks into this file.
+---
+firstname: 'chintu'
+lastname: 'reddy'
+# vars file for testig-role

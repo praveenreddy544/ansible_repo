@@ -1,0 +1,18 @@
+# nsible-playbook -i list tags_demo.yml -t 'install tree' ---> doing this will run only that task matching this tag value. If not tag valueis specified, then ansible will run all plays
+- hosts: one
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: install tree
+      package:
+         name: tree
+         state: present
+      tags:
+        - 'install tree'   # Here we are defining tag for this task. By default if no tag value is given, task will be executed. So, if you want to install only this pkg then you have to give this tag value, so that asible only runs that task matching tag value and will skip other tasks
+
+    - name: install elinks 
+      package:
+         name: elinks
+         state: present
+      tags:
+        - 'install elinks'

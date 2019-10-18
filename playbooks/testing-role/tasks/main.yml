@@ -1,0 +1,5 @@
+---
+- name: display firstname and lastname
+  debug:
+    msg: "firstanme is {{ firstname }} and lastname is {{ lastname }}"
+# tasks file for testig-role
